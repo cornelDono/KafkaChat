@@ -51,4 +51,3 @@ def test_chaat_add_message_success():
 
     chat.add_message(message)
     assert message in chat.messages
-
