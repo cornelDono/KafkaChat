@@ -25,3 +25,4 @@ Simple chat using FastAPI / Kafka / MongoDB / WebSockets
 * `make app-logs` - follow the logs in app container
 * `make app-down` - down application and all infrastructure
 * `make app-down` - go to container interactive shell(bash)
+* `make test` - test application with pytest

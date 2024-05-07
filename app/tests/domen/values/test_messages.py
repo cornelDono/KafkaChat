@@ -2,6 +2,7 @@ from datetime import datetime
 import pytest
 
 from domain.entities.messages import Chat, Message
+from domain.events.messages import NewMessageRecievedEvent
 from domain.exceptions.messages import EmptyTextException, TitleTooLongException
 from domain.values.messages import Text, Title
 
@@ -42,7 +43,7 @@ def test_create_chat_title_too_long_failed():
         chat = Chat(title)
 
 
-def test_chaat_add_message_success():
+def test_chat_add_message_success():
     text = Text('hello world')
     message = Message(text)
 
@@ -51,3 +52,23 @@ def test_chaat_add_message_success():
 
     chat.add_message(message)
     assert message in chat.messages
+
+
+def test_chat_pull_events_success():
+    text = Text('hello world')
+    message = Message(text)
+
+    title = Title('Plain chat')
+    chat = Chat(title)
+
+    chat.add_message(message)
+    pulled_events = chat.pull_events()
+
+    assert not chat._events, chat._events
+    assert len(pulled_events) == 1, pulled_events
+
+    new_event = pulled_events[0]
+
+    assert isinstance(new_event, NewMessageRecievedEvent), new_event
+    assert new_event.message_oid == message.oid
+    assert new_event.message_text == message.text.as_generic_type()
