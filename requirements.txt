@@ -7,6 +7,7 @@ decorator==5.1.1
 dnspython==2.6.1
 email_validator==2.1.1
 executing==2.0.1
+Faker==25.2.0
 fastapi==0.111.0
 fastapi-cli==0.0.2
 h11==0.14.0
@@ -34,6 +35,8 @@ pydantic==2.7.1
 pydantic_core==2.18.2
 Pygments==2.18.0
 pytest==8.2.0
+pytest-asyncio==0.23.6
+python-dateutil==2.9.0.post0
 python-dotenv==1.0.1
 python-multipart==0.0.9
 PyYAML==6.0.1
