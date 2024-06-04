@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
-from domain.exceptions.base import ApplciationException
+from domain.exceptions.base import ApplicationException
 
 
 @dataclass(frozen=True, eq=False)
-class TitleTooLongException(ApplciationException):
+class TitleTooLongException(ApplicationException):
     text: str
 
     @property
@@ -13,7 +13,7 @@ class TitleTooLongException(ApplciationException):
 
 
 @dataclass(frozen=True, eq=False)
-class EmptyTextException(ApplciationException):
+class EmptyTextException(ApplicationException):
     @property
     def message(self):
         return f'Text is empty'

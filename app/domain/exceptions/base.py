@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True, eq=False)
-class ApplciationException(Exception):
+class ApplicationException(Exception):
     @property 
     def message(self):
         return 'Application Error occurred'
