@@ -12,7 +12,7 @@ class BaseChatRepository(ABC):
         ...
     
     @abstractmethod
-    async def add_chat(self, caht: Chat) -> None:
+    async def add_chat(self, chat: Chat) -> None:
         ...
 
 
