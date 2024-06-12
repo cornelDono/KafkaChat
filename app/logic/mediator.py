@@ -1,6 +1,6 @@
 from collections import defaultdict
 from dataclasses import dataclass, field
-from typing import Iterable
+from typing import Iterable, List
 
 from domain.events.base import BaseEvent
 from logic.commands.base import CR, CT, BaseCommand, CommandHandler
@@ -10,11 +10,11 @@ from logic.exceptions.mediator import CommandHandlersNotRegisteredException, Eve
 
 @dataclass(frozen=True)
 class Mediator:
-    events_map: dict[ET, EventHandler] = field(
+    events_map: dict[ET, List[EventHandler]] = field(
         default_factory=lambda: defaultdict(list),
         kw_only=True,
     )
-    commands_map: dict[CT, CommandHandler] = field(
+    commands_map: dict[CT, List[CommandHandler]] = field(
         default_factory=lambda: defaultdict(list),
         kw_only=True,
     )
