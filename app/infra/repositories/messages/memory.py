@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field
 from typing import List
 from domain.entities.messages import Chat
-from infra.repositories.messages.base import BaseChatRepository
+from infra.repositories.messages.base import BaseChatsRepository
 
 
 @dataclass
-class MemoryChatRepository(BaseChatRepository):
+class MemoryChatRepository(BaseChatsRepository):
     _saved_chats: List[Chat] = field(default_factory=list, kw_only=True)
 
     async def check_chat_exists_by_title(self, title: str) -> bool:

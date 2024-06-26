@@ -10,3 +10,12 @@ class ChatWithThatTitleAlreadyExistsException(LogicException):
     @property
     def message(self):
         return f"Chat with title '{self.title}' already exists"
+
+
+@dataclass(frozen=True, eq=False)
+class ChatNotFoundException(LogicException):
+    chat_oid: str
+
+    @property
+    def message(self):
+        return f"Chat with {self.chat_oid=} not found"
