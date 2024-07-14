@@ -31,7 +31,7 @@ def _init_container() -> Container:
         return MongoDBChatsRepository(
             mongo_db_client=client,
             mongo_db_name=config.mongo_db_chat_database,
-            mongo_db_collection_name=config.mongo_db_chat_collection,
+            mongo_db_collection_name=config.mongo_db_messages_colletion,
         )
 
     def init_messages_mongo_db_repository() -> BaseMessagesRepository:

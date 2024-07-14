@@ -1,4 +1,5 @@
 from datetime import datetime
+from uuid import uuid4
 import pytest
 
 from domain.entities.messages import Chat, Message
@@ -9,7 +10,7 @@ from domain.values.messages import Text, Title
 
 def test_create_message_success():
     text = Text('hello world')
-    message = Message(text)
+    message = Message(text=text, chat_oid=str(uuid4()))
 
     assert message.text == text
     assert message.created_at.date() == datetime.today().date()
@@ -17,7 +18,7 @@ def test_create_message_success():
 
 def test_create_message_long_text_success():
     text = Text('hello world' * 400)
-    message = Message(text)
+    message = Message(text=text, chat_oid=str(uuid4()))
 
     assert message.text == text
     assert message.created_at.date() == datetime.today().date()
@@ -26,7 +27,7 @@ def test_create_message_long_text_success():
 def test_create_message_empty_failed():
     with pytest.raises(EmptyTextException):
         text = Text('')
-        message = Message(text)
+        message = Message(text=text, chat_oid=str(uuid4()))
 
 
 def test_create_chat_success():
@@ -45,7 +46,7 @@ def test_create_chat_title_too_long_failed():
 
 def test_chat_add_message_success():
     text = Text('hello world')
-    message = Message(text)
+    message = Message(text=text, chat_oid=str(uuid4()))
 
     title = Title('Plain chat')
     chat = Chat(title)
@@ -56,7 +57,7 @@ def test_chat_add_message_success():
 
 def test_chat_pull_events_success():
     text = Text('hello world')
-    message = Message(text)
+    message = Message(text=text, chat_oid=str(uuid4()))
 
     title = Title('Plain chat')
     chat = Chat(title)
