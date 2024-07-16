@@ -7,7 +7,7 @@ from infra.repositories.messages.base import BaseChatsRepository, BaseMessagesRe
 from infra.repositories.messages.mongo import MongoDBChatsRepository, MongoDBMessagesRepository
 from logic.commands.messages import CreateChatCommand, CreateChatCommandHandler, CreateMessageCommand, CreateMessageCommandHandler
 from logic.mediator import Mediator
-from logic.queries.messages import GetChatDetailQuery, GetChatDetailQueryhandler
+from logic.queries.messages import GetChatDetailQuery, GetChatDetailQueryhandler, GetMessagesQuery, GetMessagesQueryHandler
 from settings.config import Config
 
 
@@ -31,39 +31,46 @@ def _init_container() -> Container:
         return MongoDBChatsRepository(
             mongo_db_client=client,
             mongo_db_name=config.mongo_db_chat_database,
-            mongo_db_collection_name=config.mongo_db_messages_colletion,
+            mongo_db_collection_name=config.mongo_db_chat_collection,
         )
 
     def init_messages_mongo_db_repository() -> BaseMessagesRepository:
         return MongoDBMessagesRepository(
             mongo_db_client=client,
             mongo_db_name=config.mongo_db_chat_database,
-            mongo_db_collection_name=config.mongo_db_chat_collection,
+            mongo_db_collection_name=config.mongo_db_messages_colletion,
         )
     
     container.register(BaseChatsRepository, factory=init_chats_mongo_db_repository, scope=Scope.singleton)
     container.register(BaseMessagesRepository, factory=init_messages_mongo_db_repository, scope=Scope.singleton)
 
-    #Commands and handlers
+    #Commands handlers
     container.register(CreateChatCommandHandler)
     container.register(CreateMessageCommandHandler)
+
+    #Query handlers
     container.register(GetChatDetailQueryhandler)
+    container.register(GetMessagesQueryHandler)
 
     #Mediator
     def init_mediator() -> Mediator:
         mediator = Mediator()
         mediator.register_command(
             CreateChatCommand,
-            [container.resolve(CreateChatCommandHandler)]
+            [container.resolve(CreateChatCommandHandler)],
         )
         mediator.register_command(
             CreateMessageCommand,
-            [container.resolve(CreateMessageCommandHandler)]
+            [container.resolve(CreateMessageCommandHandler)],
         )
 
         mediator.register_query(
             GetChatDetailQuery,
-            container.resolve(GetChatDetailQueryhandler)
+            container.resolve(GetChatDetailQueryhandler),
+        )
+        mediator.register_query(
+            GetMessagesQuery,
+            container.resolve(GetMessagesQueryHandler),
         )
         return mediator
 
