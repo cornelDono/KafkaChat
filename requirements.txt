@@ -1,6 +1,8 @@
+aiokafka==0.11.0
 annotated-types==0.6.0
 anyio==4.3.0
 asttokens==2.4.1
+async-timeout==4.0.3
 certifi==2024.2.2
 click==8.1.7
 decorator==5.1.1
